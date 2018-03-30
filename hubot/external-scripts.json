@@ -1,0 +1,14 @@
+[
+  "hubot-hipchat",
+  "hubot-diagnostics",
+  "hubot-help",
+  "hubot-google-translate",
+  "hubot-auth",
+  "hubot-redis-brain",
+  "hubot-standup-alarm",
+  "hubot-newrelic2",
+  "hubot-pugme",
+  "hubot-out-of-office",
+  "hubot-shy",
+  "hubot-schedule"
+]
