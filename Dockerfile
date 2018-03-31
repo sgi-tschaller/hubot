@@ -8,8 +8,9 @@ RUN apk update && apk upgrade \
   && apk add nodejs \
   && apk add python \
   && apk add curl \
-  && curl -sS https://bootstrap.pypa.io/get-pip.py | python \
+  && curl -ksS https://bootstrap.pypa.io/get-pip.py | python \
   && pip install awscli \
+  && npm config set strict-ssl false \
   && npm install -g npm \
   && npm install -g coffee-script \
   && npm install -g yo generator-hubot \
@@ -22,11 +23,18 @@ USER  hubot
 WORKDIR /hubot
 
 # Install hubot
-RUN yo hubot --owner="Tim Schaller <tschaller@syntheticgenomics.com>" --name="ninja" --description="Roll, roll, rollercoaster" --defaults
+RUN npm config set strict-ssl false
+RUN yo hubot --owner="Tim Schaller <tschaller@syntheticgenomics.com>" \
+             --name="sgibot" \
+             --description="A very small shell script." \
+             --defaults
 COPY package.json package.json
 RUN npm install
 ADD hubot/hubot-scripts.json /hubot/
 ADD hubot/external-scripts.json /hubot/
+
+RUN sed -i '216s/ is \@mucDomain/ is "conf.btf.hipchat.com"/' \
+    /hubot/node_modules/hubot-hipchat/src/connector.coffee
 
 EXPOSE 80
 
